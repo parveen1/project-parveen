@@ -7,7 +7,94 @@ Implementar un servei LDAP usant containers Docker i crear models de tot tipus d
 funcionalitats: producer, consumer, subarbres, etc. Usar una base de dades àmplia i integrar-hi
 contingut binari amb imatges, documents i certificats digitals.
 
-**i just start collect information about producer and consumer**
+**here i explane about provider and consumer**
+
+```
+18. Replication
+
+Replicated directories are a fundamental requirement for delivering a resilient enterprise deployment.
+
+OpenLDAP has various configuration options for creating a replicated directory. In previous releases, replication was discussed in terms of a master server and some number of slave servers. A master accepted directory updates from other clients, and a slave only accepted updates from a (single) master. The replication structure was rigidly defined and any particular database could only fulfill a single role, either master or slave.
+
+As OpenLDAP now supports a wide variety of replication topologies, these terms have been deprecated in favor of provider and consumer: A provider replicates directory updates to consumers; consumers receive replication updates from providers. Unlike the rigidly defined master/slave relationships, provider/consumer roles are quite fluid: replication updates received in a consumer can be further propagated by that consumer to other servers, so a consumer can also act simultaneously as a provider. Also, a consumer need not be an actual LDAP server; it may be just an LDAP client.
+
+The following sections will describe the replication technology and discuss the various replication options that are available.
+```
+
+
+**make one master server more than one computer**
+
+```
+18.3.3. N-Way Multi-Master
+
+For the following example we will be using 3 Master nodes. Keeping in line with test050-syncrepl-multimaster of the OpenLDAP test suite, we will be configuring slapd(8) via cn=config
+
+This sets up the config database:
+
+     dn: cn=config
+     objectClass: olcGlobal
+     cn: config
+     olcServerID: 1
+
+     dn: olcDatabase={0}config,cn=config
+     objectClass: olcDatabaseConfig
+     olcDatabase: {0}config
+     olcRootPW: secret
+
+second and third servers will have a different olcServerID obviously:
+
+     dn: cn=config
+     objectClass: olcGlobal
+     cn: config
+     olcServerID: 2
+
+     dn: olcDatabase={0}config,cn=config
+     objectClass: olcDatabaseConfig
+     olcDatabase: {0}config
+     olcRootPW: secret
+
+This sets up syncrepl as a provider (since these are all masters):
+
+     dn: cn=module,cn=config
+     objectClass: olcModuleList
+     cn: module
+     olcModulePath: /usr/local/libexec/openldap
+     olcModuleLoad: syncprov.la
+
+Now we setup the first Master Node (replace $URI1, $URI2 and $URI3 etc. with your actual ldap urls):
+
+     dn: cn=config
+     changetype: modify
+     replace: olcServerID
+     olcServerID: 1 $URI1
+     olcServerID: 2 $URI2
+     olcServerID: 3 $URI3
+
+     dn: olcOverlay=syncprov,olcDatabase={0}config,cn=config
+     changetype: add
+     objectClass: olcOverlayConfig
+     objectClass: olcSyncProvConfig
+     olcOverlay: syncprov
+
+     dn: olcDatabase={0}config,cn=config
+     changetype: modify
+     add: olcSyncRepl
+     olcSyncRepl: rid=001 provider=$URI1 binddn="cn=config" bindmethod=simple
+       credentials=secret searchbase="cn=config" type=refreshAndPersist
+       retry="5 5 300 5" timeout=1
+     olcSyncRepl: rid=002 provider=$URI2 binddn="cn=config" bindmethod=simple
+       credentials=secret searchbase="cn=config" type=refreshAndPersist
+       retry="5 5 300 5" timeout=1
+     olcSyncRepl: rid=003 provider=$URI3 binddn="cn=config" bindmethod=simple
+       credentials=secret searchbase="cn=config" type=refreshAndPersist
+       retry="5 5 300 5" timeout=1
+     -
+     add: olcMirrorMode
+     olcMirrorMode: TRUE
+
+```
+
+**some more information**
 
 
 ```
