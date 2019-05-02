@@ -192,6 +192,52 @@ For those familiar with X.500, a named referral object is similar to an X.500 kn
 
 ```
 
+**overlays**
+i understand all conf. to save log information (about need to teacher agains)
+
+```
+12. Overlays
+
+Overlays are software components that provide hooks to functions analogous to those provided by backends, which can be stacked on top of the backend calls and as callbacks on top of backend responses to alter their behavior.
+
+Overlays may be compiled statically into slapd, or when module support is enabled, they may be dynamically loaded. Most of the overlays are only allowed to be configured on individual databases.
+
+Some can be stacked on the frontend as well, for global use. This means that they can be executed after a request is parsed and validated, but right before the appropriate database is selected. The main purpose is to affect operations regardless of the database they will be handled by, and, in some cases, to influence the selection of the database by massaging the request DN.
+
+Essentially, overlays represent a means to:
+
+    customize the behavior of existing backends without changing the backend code and without requiring one to write a new custom backend with complete functionality
+    write functionality of general usefulness that can be applied to different backend types
+
+When using slapd.conf(5), overlays that are configured before any other databases are considered global, as mentioned above. In fact they are implicitly stacked on top of the frontend database. They can also be explicitly configured as such:
+
+        database frontend
+        overlay <overlay name>
+
+Overlays are usually documented by separate specific man pages in section 5; the naming convention is
+
+        slapo-<overlay name>
+
+All distributed core overlays have a man page. Feel free to contribute to any, if you think there is anything missing in describing the behavior of the component and the implications of all the related configuration directives.
+
+Official overlays are located in
+
+        servers/slapd/overlays/
+
+That directory also contains the file slapover.txt, which describes the rationale of the overlay implementation, and may serve as a guideline for the development of custom overlays.
+
+Contribware overlays are located in
+
+        contrib/slapd-modules/<overlay name>/
+
+along with other types of run-time loadable components; they are officially distributed, but not maintained by the project.
+
+All the current overlays in OpenLDAP are listed and described in detail in the following sections.
+```
+
+
+
+
 **extra information also**
 
 ```
