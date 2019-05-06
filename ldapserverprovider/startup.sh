@@ -1,5 +1,5 @@
 #! /bin/bash
-# @edt ASIX M06 2018-2019
+# parveen hisx2
 # Crear i engegar slapd amb edt.org
 # -------------------------------------
 

@@ -1,5 +1,5 @@
 #! /bin/bash
-# @edt ASIX M06 2018-2019
+# parveen hisix2
 # instal.lacio slapd edt.org
 # -------------------------------------
 cp  /opt/docker/ldap.conf /etc/openldap/ldap.conf
