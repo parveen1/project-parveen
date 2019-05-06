@@ -305,6 +305,25 @@ concepte com aules o material).
 * Implementar subarbres (delegació de zona) usant almenys dos subarbres.
 * Implementar formats de dades no textuals: fotos dels usuaris i documents PDF amb
 
+
+## start make docker
+
+make new network
+
+```
+docker network crete project
+```
+
+now start both docker one by one
+
+```
+docker run --rm --name ldap_p -h ldap_p --net project -d  parveen1992/provider
+```
+
+```
+docker run --rm --name ldap_c -h ldap_c --net project -d  parveen1992/consumer
+```
+
 ### expedients o altres formats binaris.
 
 * Implementar Overlays.
