@@ -324,14 +324,25 @@ docker run --rm --name ldap_p -h ldap_p --net project -d  parveen1992/provider
 docker run --rm --name ldap_c -h ldap_c --net project -d  parveen1992/consumer
 ```
 
-**if we try change not posible**
+**This is my modify.ldif**
 
 ```
-ldapmodify -vx -h 172.17.0.3 -D "cn=Manager,dc=edt,dc=org" -w jupiter -f modify.ldif
-
+dn: cn=Pere Pou,ou=usuaris,dc=edt,dc=org
+changetype: modify
+add: description
+description: add by provider
 ```
 
 
+```
+ldapmodify -vx -h 172.18.0.3 -D "cn=Manager,dc=edt,dc=org" -w jupiter -f modify.ldif
+```
+
+**But you can change anythings in master**
+
+```
+ldapmodify -vx -h 172.18.0.2 -D "cn=Manager,dc=edt,dc=org" -w jupiter -f modify.ldif
+```
 
 ### expedients o altres formats binaris.
 

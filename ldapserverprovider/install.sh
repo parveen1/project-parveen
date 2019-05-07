@@ -3,7 +3,6 @@
 # instal.lacio slapd edt.org
 # -------------------------------------
 cp  /opt/docker/ldap.conf /etc/openldap/ldap.conf
-
 rm -rf /etc/openldap/slapd.d/*
 rm -rf /var/lib/ldap/*
 cp /opt/docker/DB_CONFIG /var/lib/ldap

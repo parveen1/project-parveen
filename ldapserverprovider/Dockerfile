@@ -2,7 +2,7 @@
 # ldapserver base edt.org or datadb
 # -------------------------------------
 FROM fedora:27
-LABEL author="@edt ASIX M06 Curs 2018-2019"
+LABEL author="Parveen hisix2"
 LABEL description="ldapserver edt.org cn dataDB"
 RUN dnf -y install procps openldap-clients openldap-servers nmap
 RUN mkdir /opt/docker
