@@ -1,0 +1,4 @@
+#### my in ldap_sub and master
+https://www.openldap.org/lists/openldap-technical/201704/msg00045.html
+##### eduard ldap sub and for chaining
+http://www.zytrax.com/books/ldap/ch7/referrals.html
