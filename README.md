@@ -344,6 +344,22 @@ ldapmodify -vx -h 172.18.0.3 -D "cn=Manager,dc=edt,dc=org" -w jupiter -f modify.
 ldapmodify -vx -h 172.18.0.2 -D "cn=Manager,dc=edt,dc=org" -w jupiter -f modify.ldif
 ```
 
+
+### start docker master and suburdinate
+
+**docker ldapmaster**
+
+```
+docker run --rm --name ldap_sub_master -h ldap_sub_master --net project -it  parveen1992/ldap_sub_master /bin/bash
+```
+
+**docker ldap_sub**
+
+```
+docker run --rm --name ldap_sub -h ldap_sub --net project -it  parveen1992/ldap_sub /bin/bash
+```
+
+
 ### expedients o altres formats binaris.
 
 * Implementar Overlays.
