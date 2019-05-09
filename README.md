@@ -335,13 +335,13 @@ description: add by provider
 
 
 ```
-ldapmodify -vx -h 172.18.0.3 -D "cn=Manager,dc=edt,dc=org" -w jupiter -f modify.ldif
+ldapmodify -vx -h ldap_c -D "cn=Manager,dc=edt,dc=org" -w jupiter -f modify.ldif
 ```
 
 **But you can change anythings in master**
 
 ```
-ldapmodify -vx -h 172.18.0.2 -D "cn=Manager,dc=edt,dc=org" -w jupiter -f modify.ldif
+ldapmodify -vx -h ldap_p -D "cn=Manager,dc=edt,dc=org" -w jupiter -f modify.ldif
 ```
 
 
@@ -358,6 +358,20 @@ docker run --rm --name ldap_sub_master -h ldap_sub_master --net project -it  par
 ```
 docker run --rm --name ldap_sub -h ldap_sub --net project -it  parveen1992/ldap_sub /bin/bash
 ```
+
+**search in both data**
+
+```
+ldapsearch -M -b "dc=subtree,dc=edt,dc=org" -x "(objectclass=referral)" '*' ref
+```
+
+**referrels to find master to by usind sub**
+
+
+
+
+
+
 
 
 ### expedients o altres formats binaris.
