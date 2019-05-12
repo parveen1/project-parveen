@@ -1,0 +1,15 @@
+dn: cn=messi1,ou=productes,dc=edt,dc=org
+objectClass: inetOrgPerson
+objectClass: xuser
+cn: messi
+sn: lionel
+xfoto: ///opt/docker/myphoto.jpg
+xpdf: ///opt/docker/user.pdf
+
+dn: cn=messi2,ou=productes,dc=edt,dc=org
+objectClass: inetOrgPerson
+objectClass: xuser
+cn: messi2
+sn: lionel
+xfoto: ///opt/docker/myphoto.jpg
+xpdf: ///opt/docker/user.pdf 

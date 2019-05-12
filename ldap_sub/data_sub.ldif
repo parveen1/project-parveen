@@ -1,0 +1,55 @@
+#dn: dc=edt,dc=org
+#dc: edt
+#description: escola del treball de barcelona
+#objectClass: dcObject
+#objectCLass: organization
+#o: edt.org
+#
+dn: dc=subtree,dc=edt,dc=org
+dc: subtree
+description: Escola del treball de Barcelona
+objectClass: dcObject
+objectClass: organization
+o: subtree.edt.org
+
+dn: ou=clients,dc=subtree,dc=edt,dc=org
+ou: clients
+description: Container per a clients linux
+objectclass: organizationalunit
+
+dn: o=asia,ou=clients,dc=subtree,dc=edt,dc=org
+o: asia
+description: Clients del continent de asia
+objectclass: organization
+
+dn: uid=mao,o=asia,ou=clients,dc=subtree,dc=edt,dc=org
+objectclass: posixAccount
+objectclass: inetOrgPerson
+cn: mao tse tung
+cn: mao zedong
+sn: mao
+homephone: 777-222-0001
+mail: mao@asia.edt.org
+description: client de zong guo
+ou: 1wiaw
+uid: mao
+uidNumber: 11001
+gidNumber: 650
+homeDirectory: /tmp/home/1wiaw/mao
+userPassword: {SHA}89F9x2P5XmKafnH54qLunfQ8h0Y=
+
+dn: uid=ho,o=asia,ou=clients,dc=subtree,dc=edt,dc=org
+objectclass: posixAccount
+objectclass: inetOrgPerson
+cn: ho chi minh
+sn: ho
+homephone: 777-222-0002
+mail: ho@asia.edt.org
+description: client de vietnam
+ou: 1wiaw
+uid: ho
+uidNumber: 11002
+gidNumber: 650
+homeDirectory: /tmp/home/1wiaw/ho
+userPassword: {SHA}mnaoV605m0kroBh50PotcX5EMLI=
+

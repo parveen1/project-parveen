@@ -1,0 +1,10 @@
+dn: cn=lokinki2,ou=productes,dc=edt,dc=org
+objectClass: xfutbolista
+cn: lokinki2
+sn: carles
+xequip: lotreball
+xdorsal: 10
+xweb: www.lokinki.com
+xfoto: ///opt/docker/myphoto.jpg
+xlesionat: FALSE
+

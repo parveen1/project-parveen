@@ -1,0 +1,63 @@
+dn: xfitxa=4322,ou=productes,dc=edt,dc=org
+objectClass: inetOrgPerson
+objectClass: xfutbolista
+cn: messi
+sn: lionel
+xfitxa: 4322
+xequip: lotreball
+xdorsal: 10
+xweb: www.lokinki.com
+xfoto: ///opt/docker/myphoto.jpg
+xlesionat: FALSE
+
+dn: xfitxa=9999,ou=productes,dc=edt,dc=org
+objectClass: inetOrgPerson
+objectClass: xfutbolista
+cn: messi
+sn: lionel
+xfitxa: 9999
+xequip: lotreball
+
+# Aquesta entital està fatal des del punt de vista de dissent de BD
+dn: xfitxa=1111,ou=usuaris,dc=edt,dc=org
+objectClass: inetOrgPerson
+objectClass: xfutbolista
+cn: messi
+sn: lionel
+xfitxa: 1111
+xequip: lotreball
+
+# Aquesta entital està fatal des del punt de vista de dissent de BD
+dn: uid=pere,ou=usuaris,dc=edt,dc=org
+objectclass: posixAccount
+objectclass: inetOrgPerson
+cn: Pere Pou
+sn: Pou
+homephone: 555-222-2221
+mail: pere@edt.org
+description: Watch out for this guy
+ou: Profes
+uid: pere
+uidNumber: 5001
+gidNumber: 100
+homeDirectory: /tmp/home/pere
+userPassword: {SSHA}ghmtRL11YtXoUhIP7z6f7nb8RCNadFe+
+
+# Exemple de usuari amb propietats de futbolista
+dn: uid=newpere,ou=usuaris,dc=edt,dc=org
+objectclass: posixAccount
+objectclass: inetOrgPerson
+objectclass: xfutbolista
+xequip: newequip
+cn: Pere Pou
+sn: Pou
+homephone: 555-222-2221
+mail: pere@edt.org
+description: Watch out for this guy
+ou: Profes
+uid: newpere
+uidNumber: 5001
+gidNumber: 100
+homeDirectory: /tmp/home/pere
+userPassword: {SSHA}ghmtRL11YtXoUhIP7z6f7nb8RCNadFe+
+

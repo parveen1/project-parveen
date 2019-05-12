@@ -1,0 +1,9 @@
+dn: xfitxa=4321,ou=productes,dc=edt,dc=org
+objectClass: xfutbolista
+xfitxa: 4321
+xequip: lotreball
+xdorsal: 10
+xweb: www.lokinki.com
+xfoto: ///opt/docker/myphoto.jpg
+xlesionat: FALSE
+

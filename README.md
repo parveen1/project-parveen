@@ -350,13 +350,13 @@ ldapmodify -vx -h ldap_p -D "cn=Manager,dc=edt,dc=org" -w jupiter -f modify.ldif
 **docker ldapmaster**
 
 ```
-docker run --rm --name ldap_sub_master -h ldap_sub_master --net project -it  parveen1992/ldap_sub_master /bin/bash
+docker run --rm --name ldap_sub_master -h ldap_sub_master --net project -d  parveen1992/ldap_sub_master
 ```
 
 **docker ldap_sub**
 
 ```
-docker run --rm --name ldap_sub -h ldap_sub --net project -it  parveen1992/ldap_sub /bin/bash
+docker run --rm --name ldap_sub -h ldap_sub --net project -d  parveen1992/ldap_sub
 ```
 
 **search in both data**
@@ -372,7 +372,7 @@ ldapsearch -M -b "dc=subtree,dc=edt,dc=org" -x "(objectclass=referral)" '*' ref
 **docker ldap_schema add photo and pdf**
 
 ```
-docker run --rm --name ldap_schema -h ldap_schema --network project -it parveen1992/ldap_schema /bin/bash
+docker run --rm --name ldap_schema -h ldap_schema --network project -d parveen1992/ldap_schema 
 ```
 
 **after that check by php ldap to how looks like**
