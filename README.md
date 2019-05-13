@@ -74,11 +74,12 @@ docker run --rm --name ldap_schema -h ldap_schema --network project -d parveen19
 
 **after that check by php ldap to how looks like**
 
-```
+
 http://ip-address:80/phpldapamin/
 
+```
 docker run --rm --name php -h php --net project -it parveen1992/ldap_php /bin/bash
-
+```
 
 
 ### Replication
@@ -371,6 +372,7 @@ For those familiar with X.500, a named referral object is similar to an X.500 kn
 ```
 
 **overlays**
+
 i understand all conf. to save log information (about need to teacher agains)
 
 ```
