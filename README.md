@@ -1,6 +1,184 @@
 # Project parveen Servei LDAP
 
 
+### Data for ldif
+
+**Here i show how is my structure of ldif file all data hbd beacuse of more function we can use**
+
+* start with Distinguished Name **dc=edt,dc=org**
+
+* make organization in this data **o=europa,dc=edt,dc=org"
+
+* now make organization unit in my case **ou=usuaris,o=europa,dc=edt,dc=org**
+
+* add new organization unit in my case **ou=group,o=europa,dc=edt,dc=org**
+
+* add new organization unit in my case **ou=usermod,o=europa,dc=edt,dc=org**
+
+
+* add new organization unit in my case **ou=maquines,o=europa,dc=edt,dc=org**
+
+* now make new organization for another subordinate in my case **o=asia,dc=edt,dc=org**
+
+**after this all data will be make another place or docker**
+
+* now make organization unit in my case **ou=usuaris,o=asia,dc=edt,dc=org**
+
+* add new organization unit in my case **ou=group,o=asia,dc=edt,dc=org**
+
+* add new organization unit in my case **ou=usermod,o=asia,dc=edt,dc=org**
+
+
+* add new organization unit in my case **ou=maquines,o=asia,dc=edt,dc=org**
+
+
+
+### Schema Specification
+
+**To save data need some in ldap we called schema**
+
+different schema make esay to read and write also make fuctionable data in
+ ldif very important to know different type of like photo,dn,cn,binary file etc.
+
+here one simple exemple make by mi
+
+```
+# schema add photo and pdf:
+#          foto, pdf
+# parveen
+# Objecte  Auxiliary  (derivat de TOP)
+#
+attributetype (1.1.2.1.1 NAME 'xfoto'
+  DESC 'foto del user jpeg'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.28)
+
+attributetype (1.1.2.1.2 NAME 'xpdf'
+  DESC 'pdf file'
+  SYNTAX  1.3.6.1.4.1.1466.115.121.1.5
+  SINGLE-VALUE)
+
+objectclass (1.1.2.2.1 NAME 'xuser'
+  DESC 'user add foto and pdf'
+  SUP TOP
+  AUXILIARY
+  MUST ( xfoto $ xpdf )
+ )
+
+```
+
+**docker ldap_schema add photo and pdf**
+
+```
+docker run --rm --name ldap_schema -h ldap_schema --network project -d parveen1992/ldap_schema
+```
+
+**after that check by php ldap to how looks like**
+
+```
+http://ip-address:80/phpldapamin/
+
+docker run --rm --name php -h php --net project -it parveen1992/ldap_php /bin/bash
+
+
+
+### Replication
+
+**ldap server backup save called replication**
+
+but today ldap user ldap provider and consumer server which can we use both as main server and for backup.
+
+here is all configutaion of this server all if you like also use my docker
+
+make new network
+
+```
+docker network crete project
+```
+
+now start both docker one by one
+
+```
+docker run --rm --name ldap_p -h ldap_p --net project -d  parveen1992/provider
+```
+
+```
+docker run --rm --name ldap_c -h ldap_c --net project -d  parveen1992/consumer
+```
+
+**This is my modify.ldif**
+
+```
+dn: cn=Pere Pou,ou=usuaris,dc=edt,dc=org
+changetype: modify
+add: description
+description: add by provider
+```
+
+```
+ldapmodify -vx -h ldap_c -D "cn=Manager,dc=edt,dc=org" -w jupiter -f modify.ldif
+```
+
+**But you can change anythings in master**
+
+```
+ldapmodify -vx -h ldap_p -D "cn=Manager,dc=edt,dc=org" -w jupiter -f modify.ldif
+```
+
+
+
+### Subordinate
+
+**docker ldapmaster**
+
+```
+docker run --rm --name ldap_sub_master -h ldap_sub_master --net project -d  parveen1992/ldap_sub_master
+```
+
+**docker ldap_sub**
+
+```
+docker run --rm --name ldap_sub -h ldap_sub --net project -d  parveen1992/ldap_sub
+```
+
+**search in both data**
+
+```
+ldapsearch -M -b "dc=subtree,dc=edt,dc=org" -x "(objectclass=referral)" '*' ref
+```
+
+**referrels to find master to by usind sub**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+**########################################################################**
+
+
 ### Tecnologies: LDAP, Docker, TLS
 
 Implementar un servei LDAP usant containers Docker i crear models de tot tipus de
@@ -275,21 +453,6 @@ Note: the use of referrals to construct a Distributed Directory Service is extre
 Note: LDAP operations, even subtree searches, normally access only one database. That can be changed by gluing databases together with the subordinate/olcSubordinate keyword. Please see slapd.conf(5) and slapd-config(5). 
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ### Docker:
 
 * Implementar per separat en un container de Docker cada un dels components: servidor,
@@ -382,9 +545,6 @@ http://ip-address:80/phpldapamin/
 
 docker run --rm --name php -h php --net project -it parveen1992/ldap_php /bin/bash
 ```
-
-
-
 
 ### expedients o altres formats binaris.
 
