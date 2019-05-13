@@ -7,7 +7,7 @@
 
 * start with Distinguished Name **dc=edt,dc=org**
 
-* make organization in this data **o=europa,dc=edt,dc=org"
+* make organization in this data **o=europa,dc=edt,dc=org**
 
 * now make organization unit in my case **ou=usuaris,o=europa,dc=edt,dc=org**
 
@@ -86,6 +86,8 @@ docker run --rm --name php -h php --net project -it parveen1992/ldap_php /bin/ba
 
 **ldap server backup save called replication**
 
+OpenLDAP now supports a wide variety of replication topologies, these terms have been deprecated in favor of provider and consumer: A provider replicates directory updates to consumers; consumers receive replication updates from providers. Unlike the rigidly defined master/slave relationships, provider/consumer roles are quite fluid: replication updates received in a consumer can be further propagated by that consumer to other servers, so a consumer can also act simultaneously as a provider. Also, a consumer need not be an actual LDAP server; it may be just an LDAP client.
+
 but today ldap user ldap provider and consumer server which can we use both as main server and for backup.
 
 here is all configutaion of this server all if you like also use my docker
@@ -125,6 +127,34 @@ ldapmodify -vx -h ldap_c -D "cn=Manager,dc=edt,dc=org" -w jupiter -f modify.ldif
 ldapmodify -vx -h ldap_p -D "cn=Manager,dc=edt,dc=org" -w jupiter -f modify.ldif
 ```
 
+##### provider
+
+**overlay syncprov**
+
+Add in plugin for save all entres later update for consumer
+
+**syncprov-checkpoint 50 10**
+
+this means update ever 50 operction or 10 mintus
+
+**syncprov-sessionlog 100**
+
+user log in after 100
+
+##### consumer
+
+**addtion conf. in consumer**
+
+```
+syncrepl rid=001
+  provider=ldap://ldap_p
+  type=refreshOnly
+  interval=00:00:00:10
+  searchbase="dc=edt,dc=org"
+  binddn="cn=Manager,dc=edt,dc=org"
+  credentials=jupiter
+updateref ldap://ldap_p
+```
 
 
 ### Subordinate

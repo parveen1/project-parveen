@@ -1,15 +1,16 @@
-dn: cn=messi1,ou=productes,dc=edt,dc=org
+dn: cn=messi1,ou=usuaris,o=europa,dc=edt,dc=org
 objectClass: inetOrgPerson
 objectClass: xuser
-cn: messi
-sn: lionel
-xfoto: ///opt/docker/myphoto.jpg
-xpdf: ///opt/docker/user.pdf
+cn: messi1
+xfoto:< file:///opt/docker/myphoto.jpg
+sn: lionel1
+xpdf:< file:///opt/docker/user.pdf
 
-dn: cn=messi2,ou=productes,dc=edt,dc=org
+dn: cn=messi2,ou=usuaris,o=europa,dc=edt,dc=org
 objectClass: inetOrgPerson
 objectClass: xuser
 cn: messi2
-sn: lionel
-xfoto: ///opt/docker/myphoto.jpg
-xpdf: ///opt/docker/user.pdf 
+xfoto:< file:///opt/docker/myphoto.jpg
+sn: linonel2
+xpdf:< file:///opt/docker/user.pdf
+
