@@ -81,6 +81,13 @@ http://ip-address:80/phpldapamin/
 docker run --rm --name php -h php --net project -it parveen1992/ldap_php /bin/bash
 ```
 
+**avd. serch in ldap**
+
+```
+ldapsearch -x -LLL -h localhost -D "cn=user01,ou=usermod,o=europa,dc=edt,dc=org" -w user01 "(cn=pere pou)"
+```
+
+
 
 ### Replication
 
@@ -181,15 +188,86 @@ ldapsearch -M -b "dc=subtree,dc=edt,dc=org" -x "(objectclass=referral)" '*' ref
 
 
 
+### Ldap httpd
+
+** add modul mod_ldap **
+
+conf. like this
+
+```
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        ServerName ldap_httpd
+        DocumentRoot /var/www
+        <Directory />
+                Options FollowSymLinks
+                AllowOverride None
+                Order deny,allow
+                Deny from All
+        </Directory>
+        <Directory /var/www/>
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride None
+                Order deny,allow
+                Deny from All
+
+                AuthType Basic
+                AuthBasicProvider ldap
+              #<!--  AuthzLDAPAuthoritative on -->
+                AuthName "Test OPenLDAP login"
+                AuthLDAPURL ldap://172.18.0.2/ou=usuaris,o=europa,dc=edt,dc=org?uid
+                AuthLDAPBindDN "cn=Manager,dc=edt,dc=org"
+                AuthLDAPBindPassword "jupiter"
+                Require valid-user
+                Satisfy any
+
+        </Directory>
+
+        ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+        <Directory "/usr/lib/cgi-bin">
+                AllowOverride None
+                Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+                Order allow,deny
+                Allow from all
+        </Directory>
+
+     #   ErrorLog ${APACHE_LOG_DIR}/error.log
+
+        # Possible values include: debug, info, notice, warn, error, crit,
+        # alert, emerg.
+        LogLevel warn
+
+      #  CustomLog ${APACHE_LOG_DIR}/access.log combined
+	Alias /doc/ "/usr/share/doc/"
+	<Directory "/usr/share/doc/">
+        	Options Indexes MultiViews FollowSymLinks
+        	AllowOverride None
+        	Order deny,allow
+        	Deny from all
+        	Allow from 127.0.0.0/255.0.0.0 ::1/128
+    </Directory>
+
+</VirtualHost>
+
+```
 
 
+**result of some connection try**
+
+```
+172.18.0.1 - - [14/May/2019:09:35:34 +0000] "GET / HTTP/1.1" 401 381 "-" "Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36"
+172.18.0.1 - pere [14/May/2019:09:35:45 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36"
+172.18.0.1 - pere [14/May/2019:09:35:45 +0000] "GET /favicon.ico HTTP/1.1" 404 209 "http://172.18.0.2/" "Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36"
+
+```
 
 
+**docker start and also connect able to ldap_schema**
 
+```
+docker run --rm --name ldap_httpd -h ldap_httpd --network project -it parveen1992/ldap_httpd /bin/bash
 
-
-
-
+```
 
 
 
