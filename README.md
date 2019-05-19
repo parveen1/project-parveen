@@ -287,7 +287,7 @@ docker run --rm --name ldap_httpd -h ldap_httpd --network project -it parveen199
 ## After this only extra information for mi thankyou for join my page
 
 
-![end](end_photo.jpg)
+![end](end_photo1.png)
 
  
 **########################################################################**
