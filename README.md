@@ -272,10 +272,44 @@ docker run --rm --name ldap_httpd -h ldap_httpd --network project -it parveen199
 
 
 
+###  LDAP TLS
+
+**user old cert to my new data working great**
+**must be use same and no project network beacuse of ip adress**
+
+```
+docker run --rm --name ldap.edt.org -h ldap.edt.org -it parveen1992/ldaps /bin/bash
+```
 
 
+### LDAP PAM
 
+**pam docker as host**
 
+```
+docker run --rm --name host -h host --net project --privileged -it parveen1992/ldap_pam /bin/bash
+```
+
+**some try**
+
+```
+[root@host docker]# su - pere
+Creating directory '/tmp/home/pere'.
+reenter password for pam_mount:
+[pere@host ~]$ pwd
+/tmp/home/pere
+[pere@host ~]$ ll
+total 0
+drwxr-xr-x. 2 pere group01 40 May 19 16:06 test
+[pere@host ~]$ su - marta
+pam_mount password:
+Creating directory '/tmp/home/marta'.
+[marta@host ~]$ ll
+total 0
+[marta@host ~]$ pwd
+/tmp/home/marta
+
+```
 
 
 

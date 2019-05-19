@@ -1,0 +1,60 @@
+dn: uid=local01,ou=usuaris,o=europa,dc=edt,dc=org
+objectclass: posixAccount
+objectclass: inetOrgPerson
+cn: local01
+sn: local01
+ou: grup name
+uid: local01
+uidNumber: 1
+gidNumber: 1
+loginShell: /bin/bash
+homeDirectory: /home/local01
+
+dn: uid=local02,ou=usuaris,o=europa,dc=edt,dc=org
+objectclass: posixAccount
+objectclass: inetOrgPerson
+cn: local02
+sn: local02
+ou: grup name
+uid: local02
+uidNumber: 2
+gidNumber: 2
+loginShell: /bin/bash
+homeDirectory: /home/local02
+
+dn: uid=local03,ou=usuaris,o=europa,dc=edt,dc=org
+objectclass: posixAccount
+objectclass: inetOrgPerson
+cn: local03
+sn: local03
+ou: grup name
+uid: local03
+uidNumber: 3
+gidNumber: 3
+loginShell: /bin/bash
+homeDirectory: /home/local03
+
+dn: uid=local04,ou=usuaris,o=europa,dc=edt,dc=org
+objectclass: posixAccount
+objectclass: inetOrgPerson
+cn: local04
+sn: local04
+ou: grup name
+uid: local04
+uidNumber: 4
+gidNumber: 3
+loginShell: /bin/bash
+homeDirectory: /home/local04
+
+dn: uid=local05,ou=usuaris,o=europa,dc=edt,dc=org
+objectclass: posixAccount
+objectclass: inetOrgPerson
+cn: local05
+sn: local05
+ou: grup name
+uid: local05
+uidNumber: 5
+gidNumber: 3
+loginShell: /bin/bash
+homeDirectory: /home/local05
+
