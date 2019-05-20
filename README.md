@@ -1,5 +1,35 @@
 # Project parveen Servei LDAP
 
+my project is about to explaine some basic and adv. function openldap.i am going to explaine step by step different function of ldap.
+
+Here i used different docker to make different ldap server and database of ldap.
+
+Also we are going to use as clients how is work connection etc.
+
+we start from basic information and knowledge about opeldap......thanks
+
+**LDAP stands for Lightweight Directory Access Protocol**
+**when to use ldap**
+
+* Machine Authentication
+* User Authentication
+* User/System Groups
+* Address book
+* Organization Representation
+* Asset Tracking
+* Telephony Information Store
+* User resource management
+* E-mail address lookups
+* Application Configuration store
+* PBX Configuration store
+
+**ldap workk**
+
+LDAP utilizes a client-server model. One or more LDAP servers contain the data making up the directory information tree (DIT)
+
+**slapd conf**
+
+slapd(8) is an LDAP directory server that runs on many different platforms. You can use it to provide a directory service of your very own. Your directory can contain pretty much anything you want to put in it. You can connect it to the global LDAP directory service, or run a service all by yourself.
 
 ### Data for ldif
 
