@@ -144,11 +144,11 @@ docker network crete project
 now start both docker one by one
 
 ```
-docker run --rm --name ldap_p -h ldap_p --net project -d  parveen1992/provider
+docker run --rm --name ldap_p -h ldap_p --net project -it  parveen1992/ldap_provider /bin/bash
 ```
 
 ```
-docker run --rm --name ldap_c -h ldap_c --net project -d  parveen1992/consumer
+docker run --rm --name ldap_c -h ldap_c --net project -it  parveen1992/ldap_consumer /bin/bash
 ```
 
 **This is my modify.ldif**
@@ -160,14 +160,21 @@ add: description
 description: add by provider
 ```
 
-```
-ldapmodify -vx -h ldap_c -D "cn=Manager,dc=edt,dc=org" -w jupiter -f modify.ldif
+**not posible to modify**
+
 ```
 
-**But you can change anythings in master**
+ldapmodify -vx -h ldap_c -D "cn=user02,ou=usermod,o=europa,dc=edt,dc=org" -w user01 -f modify.ldif
+```
+
+**But you can change anythings in master or consumer**
 
 ```
 ldapmodify -vx -h ldap_p -D "cn=Manager,dc=edt,dc=org" -w jupiter -f modify.ldif
+
+ldapmodify -vx -h ldap_c -D "cn=Manager,dc=edt,dc=org" -w jupiter -f modify.ldif
+
+ldapmodify -vx -h ldap_c -D "cn=user01,ou=usermod,o=europa,dc=edt,dc=org" -w user01 -f modify.ldif
 ```
 
 ##### provider
@@ -221,10 +228,51 @@ docker run --rm --name ldap_sub -h ldap_sub --net project -d  parveen1992/ldap_s
 
 ```
 ldapsearch -M -b "dc=subtree,dc=edt,dc=org" -x "(objectclass=referral)" '*' ref
+
+[root@ldap_sub_master docker]# ldapsearch -M -LLL -b "o=asia,dc=edt,dc=org" -x "(objectclass=referral)" '*' ref
+dn: o=asia,dc=edt,dc=org
+objectClass: referral
+objectClass: extensibleObject
+o: asia
+ref: ldap://ldap_sub/o=asia,dc=edt,dc=org
+
 ```
 
 **referrels to find master to by usind sub**
 
+
+**try in master**
+
+```
+
+[root@ldap_sub_master docker]# ldapsearch -x -LLL -D "cn=Manager,dc=edt,dc=org" -b "o=asia,dc=edt,dc=org" -w jupiter dn
+dn: o=asia,dc=edt,dc=org
+
+dn: ou=maquines,o=asia,dc=edt,dc=org
+
+dn: ou=group,o=asia,dc=edt,dc=org
+
+dn: ou=usermod,o=asia,dc=edt,dc=org
+
+dn: ou=usuaris,o=asia,dc=edt,dc=org
+
+dn: cn=Pere Pou,ou=usuaris,o=asia,dc=edt,dc=org
+
+dn: cn=Admin System,ou=usuaris,o=asia,dc=edt,dc=org
+
+dn: cn=user01,ou=usermod,o=asia,dc=edt,dc=org
+
+dn: cn=group01,ou=group,o=asia,dc=edt,dc=org
+
+dn: cn=group02,ou=group,o=asia,dc=edt,dc=org
+
+```
+
+```
+[root@ldap_sub_master docker]# ldapsearch -x -LLL -D "cn=Manager,o=asia,dc=edt,dc=org" -b "o=asia,dc=edt,dc=org" -w jupiter dn
+ldap_bind: Invalid credentials (49)
+
+```
 
 
 ### Ldap httpd
