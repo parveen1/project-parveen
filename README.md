@@ -1,5 +1,35 @@
 # Project parveen Servei LDAP
 
+my project is about to explaine some basic and adv. function openldap.i am going to explaine step by step different function of ldap.
+
+Here i used different docker to make different ldap server and database of ldap.
+
+Also we are going to use as clients how is work connection etc.
+
+we start from basic information and knowledge about opeldap......thanks
+
+**LDAP stands for Lightweight Directory Access Protocol**
+**when to use ldap**
+
+* Machine Authentication
+* User Authentication
+* User/System Groups
+* Address book
+* Organization Representation
+* Asset Tracking
+* Telephony Information Store
+* User resource management
+* E-mail address lookups
+* Application Configuration store
+* PBX Configuration store
+
+**ldap workk**
+
+LDAP utilizes a client-server model. One or more LDAP servers contain the data making up the directory information tree (DIT)
+
+**slapd conf**
+
+slapd(8) is an LDAP directory server that runs on many different platforms. You can use it to provide a directory service of your very own. Your directory can contain pretty much anything you want to put in it. You can connect it to the global LDAP directory service, or run a service all by yourself.
 
 ### Data for ldif
 
@@ -320,10 +350,44 @@ docker run --rm --name ldap_httpd -h ldap_httpd --network project -it parveen199
 
 
 
+###  LDAP TLS
+
+**user old cert to my new data working great**
+**must be use same and no project network beacuse of ip adress**
+
+```
+docker run --rm --name ldap.edt.org -h ldap.edt.org -it parveen1992/ldaps /bin/bash
+```
 
 
+### LDAP PAM
 
+**pam docker as host**
 
+```
+docker run --rm --name host -h host --net project --privileged -it parveen1992/ldap_pam /bin/bash
+```
+
+**some try**
+
+```
+[root@host docker]# su - pere
+Creating directory '/tmp/home/pere'.
+reenter password for pam_mount:
+[pere@host ~]$ pwd
+/tmp/home/pere
+[pere@host ~]$ ll
+total 0
+drwxr-xr-x. 2 pere group01 40 May 19 16:06 test
+[pere@host ~]$ su - marta
+pam_mount password:
+Creating directory '/tmp/home/marta'.
+[marta@host ~]$ ll
+total 0
+[marta@host ~]$ pwd
+/tmp/home/marta
+
+```
 
 
 
@@ -335,7 +399,7 @@ docker run --rm --name ldap_httpd -h ldap_httpd --network project -it parveen199
 ## After this only extra information for mi thankyou for join my page
 
 
-![end](end_photo.jpg)
+![end](end_photo1.png)
 
  
 **########################################################################**
