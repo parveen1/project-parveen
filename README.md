@@ -61,6 +61,7 @@ slapd(8) is an LDAP directory server that runs on many different platforms. You 
 
 * add new organization unit in my case **ou=maquines,o=asia,dc=edt,dc=org**
 
+![end](aux/data_ldap.png)
 
 
 ### Schema Specification
@@ -104,11 +105,12 @@ docker run --rm --name ldap_schema -h ldap_schema --network project -d parveen19
 
 **after that check by php ldap to how looks like**
 
-
-http://ip-address:80/phpldapamin/
+```
+http://localhost:80/phpldapamin/
+```
 
 ```
-docker run --rm --name php -h php --net project -it parveen1992/ldap_php /bin/bash
+docker run --rm --name php -h php --net project -p 80:80-it parveen1992/ldap_php /bin/bash
 ```
 
 **avd. serch in ldap**
@@ -143,6 +145,10 @@ page for everyone
 OpenLDAP now supports a wide variety of replication topologies, these terms have been deprecated in favor of provider and consumer: A provider replicates directory updates to consumers; consumers receive replication updates from providers. Unlike the rigidly defined master/slave relationships, provider/consumer roles are quite fluid: replication updates received in a consumer can be further propagated by that consumer to other servers, so a consumer can also act simultaneously as a provider. Also, a consumer need not be an actual LDAP server; it may be just an LDAP client.
 
 but today ldap user ldap provider and consumer server which can we use both as main server and for backup.
+
+
+![end](aux/provider_consumer.png)
+
 
 here is all configutaion of this server all if you like also use my docker
 
@@ -219,6 +225,9 @@ updateref ldap://ldap_p
 
 
 ### Subordinate
+
+
+![end](aux/sub_master.png)
 
 **docker ldapmaster**
 
@@ -383,7 +392,7 @@ total 0
 ## After this only extra information for mi thankyou for join my page
 
 
-![end](end_photo1.png)
+![end](aux/end_photo1.png)
 
  
 **########################################################################**
