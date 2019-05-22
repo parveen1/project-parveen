@@ -25,7 +25,6 @@ for line in filegroup :
 	user_list = user_list.split(',')
 	
 	for user in user_list :
-		print user
 		if user != '\n' :
 			add_line += 'memberUid: %s\n' % (user)
 		else:

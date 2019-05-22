@@ -66,7 +66,7 @@ slapd(8) is an LDAP directory server that runs on many different platforms. You 
 
 ### Schema Specification
 
-**To save data need some in ldap we called schema**
+**To save data in a readable format in ldap we called schema(this is reason so we can )**
 
 different schema make esay to read and write also make fuctionable data in
  ldif very important to know different type of like photo,dn,cn,binary file etc.
@@ -110,7 +110,7 @@ http://localhost:80/phpldapamin/
 ```
 
 ```
-docker run --rm --name php -h php --net project -p 80:80-it parveen1992/ldap_php /bin/bash
+docker run --rm --name ldap_php -h ldap_php --net project -p 2080:80 -it parveen1992/ldap_php /bin/bash
 ```
 
 **avd. serch in ldap**
@@ -130,13 +130,62 @@ page for everyone
 
 <br>
 
-<a href="http://localhost:2080">see phot data binnary</a>
+<a href="http://localhost:2080/phpldapadmin">see phot data binnary</a>
 
 <br>
 
 <a href="http://localhost:3080">login</a>
 
 ```
+
+### Scripts
+
+**here i make some useful scripts /etc/passwd to ldif file**
+
+make groop file
+
+```
+python group_make_ldif.py groupfile.txt group.ldif
+``` 
+make user file
+
+```
+python user_make_ldif.py user_file.txt user.ldif
+
+```
+
+
+**some try form outside**
+
+```
+[root@i03 scripts]# ldapadd -h 172.18.0.2 -D "cn=Manager,dc=edt,dc=org" -w jupiter -f group.ldif 
+adding new entry "cn=grouplocal01,ou=group,o=europa,dc=edt,dc=org "
+
+adding new entry "cn=grouplocal02,ou=group,o=europa,dc=edt,dc=org "
+
+adding new entry "cn=grouplocal03,ou=group,o=europa,dc=edt,dc=org "
+
+```
+
+my scripts
+
+```
+#! /bin/bash
+# description add authomatic all user
+rm -rf group.ldif
+rm -rf user.ldif
+
+python group_make_ldif.py groupfile.txt group.ldif
+
+python user_make_ldif.py user_file.txt user.ldif
+
+# insisde from network or docker(from out must use ip address)
+ldapadd -h ldap_schema -D "cn=Manager,dc=edt,dc=org" -w jupiter -f group.ldif
+ldapadd -h ldap_schema -D "cn=Manager,dc=edt,dc=org" -w jupiter -f user.ldif
+
+```
+
+
 
 ### Replication
 
@@ -225,6 +274,14 @@ updateref ldap://ldap_p
 
 
 ### Subordinate
+
+**Subordinate knowledge information may be provided to delegate a subtree. Subordinate knowledge information is maintained in the directory as a special referral object at the delegate point. The referral object acts as a delegation point, gluing two services together. This mechanism allows for hierarchical directory services to be constructed.**
+
+
+**NOTE:- if one data str. conf to where we can find iformation about this DSA (another DIT) this is called referral**
+
+
+**But we use this referral to server collect all information and send to client**  
 
 
 ![end](aux/sub_master.png)
@@ -345,6 +402,8 @@ docker run --rm --name ldap_httpd -h ldap_httpd --network project -p 3080:80 -it
 
 ###  LDAP TLS
 
+**docker connect to ldap_schema by using tls (ca certificat) or start tls means that can connect normal or if both client and erver have conf for tls then start tls**
+
 **user old cert to my new data working great**
 **must be use same and no project network beacuse of ip adress**
 
@@ -354,6 +413,8 @@ docker run --rm --name ldap.edt.org -h ldap.edt.org -it parveen1992/ldaps /bin/b
 
 
 ### LDAP PAM
+
+**here docker ldap_pam  connect to ldap_schema and valid to user to login mount of home if not exists then make new one by using pam conf.**
 
 **pam docker as host**
 
