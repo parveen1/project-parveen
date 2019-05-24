@@ -1,9 +1,10 @@
 #! /bin/bash
 # @edt ASIX M06 2018-2019
-# Crear i engegar slapd amb edt.org
+# startup.sh
 # -------------------------------------
 
 /opt/docker/install.sh && echo "Install Ok"
-/usr/sbin/httpd $OPTIONS -DFOREGROUND && echo "ok"
-#/sbin/httpd   && echo "slapd Ok"
+/usr/sbin/nslcd && echo "nslcd Ok"
+/usr/sbin/nscd && echo "nscd Ok"
+/bin/bash
 

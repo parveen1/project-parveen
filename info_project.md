@@ -23,3 +23,12 @@ Make docker of master ans subordination
 ### step 5 
 
 docker edit schema for user
+
+
+### clients docker
+
+make docker of pam,httpd and php
+
+### document part
+
+start make prestacion ,markdown ,html and poster video......

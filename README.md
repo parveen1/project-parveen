@@ -369,17 +369,17 @@ dn: cn=group02,ou=group,o=asia,dc=edt,dc=org
 
 **LDAP TLS basic openssl**
 
-**docker connect to ldap_schema by using tls (ca certificat) or start tls means that can connect normal or if both client and erver have conf for tls then start tls**
+**docker connect to ldap_schema by using tls (ca certificat) or start tls means that can connect normal or if both client and server have conf for tls then start tls**
 
-**user old cert to my new data working great**
-**must be use same and no project network beacuse of ip adress**
+**user old cert to my new data working great only change extension**
+**must be use same and no project network beacuse of ip adress or add subject alter name**
 
 ```
 docker run --rm --name ldap.edt.org -h ldap.edt.org --network project -it parveen1992/ldaps /bin/bash
 ```
 
 
-**some try result**
+**check point**
 
 ```
 [root@ldaps docker]# ldapsearch -x -LLL -H ldaps://ldap.edt.org -s base -b 'dc=edt,dc=org' dn
@@ -409,10 +409,10 @@ ff02::2	ip6-allrouters
 **pam docker as host**
 
 ```
-docker run --rm --name host -h host --net project --privileged -it parveen1992/ldap_pam /bin/bash
+docker run --rm --name host -h host --net project --privileged -it parveen1992/ldap_pam 
 ```
 
-**some try**
+**check point**
 
 ```
 [root@host docker]# su - pere
@@ -436,25 +436,9 @@ total 0
 
 
 
-### GRAPIH VIEW php
+### GRAHICAL VIEW PHP AND HTTPS
 
-**after that check by php ldap to how looks like**
-
-```
-http://localhost:80/phpldapamin/
-```
-
-```
-docker run --rm --name ldap_php -h ldap_php --net project -p 2080:80 -it parveen1992/ldap_php /bin/bash
-```
-
-**avd. serch in ldap**
-
-```
-ldapsearch -x -LLL -h localhost -D "cn=user01,ou=usermod,o=europa,dc=edt,dc=org" -w user01 "(cn=pere pou)"
-```
-
-**my localhost page**
+**my localhost page in httpd**
 
 ```
 <h1> hello everyone </h1>
@@ -465,20 +449,25 @@ page for everyone
 
 <br>
 
-<a href="http://localhost:2080/phpldapadmin">see phot data binnary</a>
+<a href="http://localhost:2080/phpldapadmin">To see photo and data binnary</a>
 
 <br>
 
-<a href="http://localhost:3080">login</a>
+<a href="http://localhost:3080">login as ldap user</a>
 
 ```
 
+#### PHP
+
+**check by php ldap to look about photo and  pdf of user**
 
 
+```
+docker run --rm --name ldap_php -h ldap_php --net project -p 2080:80 -it parveen1992/ldap_php /bin/bash
+```
 
 
-
-### Ldap httpd
+#### Ldap httpd
 
 ** add modul mod_ldap **
 
@@ -509,7 +498,7 @@ conf. like this
 </VirtualHost>
 
 ```
-**result of some connection try**
+**check point**
 ```
 172.18.0.1 - - [14/May/2019:09:35:34 +0000] "GET / HTTP/1.1" 401 381 "-" "Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36"
 172.18.0.1 - pere [14/May/2019:09:35:45 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36"
@@ -520,7 +509,7 @@ conf. like this
 **docker start and also connect able to ldap_schema**
 
 ```
-docker run --rm --name ldap_httpd -h ldap_httpd --network project -p 3080:80 -it parveen1992/ldap_httpd /bin/bash
+docker run --rm --name ldap_httpd -h ldap_httpd --network project -p 3080:80 -d parveen1992/ldap_httpd 
 
 ```
 

@@ -5,7 +5,7 @@
 FROM fedora:27
 LABEL author="@edt ASIX M06 Curs 2018-2019"
 LABEL description="ldapserver edt.org cn dataDB"
-RUN dnf -y install procps openldap-clients openldap-servers vim iputils iproute nmap  mlocate man-db httpd phpldapadmin php-xml
+RUN dnf -y install procps openldap-clients openldap-servers httpd mod_ldap nmap
 RUN mkdir /opt/docker
 COPY * /opt/docker/
 RUN cp  /opt/docker/ldap.conf /etc/openldap/ldap.conf

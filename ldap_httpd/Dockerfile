@@ -8,7 +8,6 @@ LABEL description="ldapserver edt.org cn dataDB"
 RUN dnf -y install procps openldap-clients openldap-servers httpd mod_ldap nmap
 RUN mkdir /opt/docker
 COPY * /opt/docker/
-RUN cp  /opt/docker/ldap.conf /etc/openldap/ldap.conf
 RUN chmod +x /opt/docker/install.sh /opt/docker/startup.sh
 WORKDIR /opt/docker
 EXPOSE 389
