@@ -1,11 +1,10 @@
-#!/bin/bash
-# parveen hisx2
+#! /bin/bash
+# @edt ASIX M06 2018-2019
 # Crear i engegar slapd amb edt.org
 # -------------------------------------
+
 /opt/docker/install.sh && echo "Install Ok"
+#/sbin/slapd -d0  && echo "slapd Ok"
+#/sbin/slapd  && echo "slapd Ok"
+/sbin/slapd -d0 -u ldap -h "ldap:/// ldaps:/// ldapi:///" && echo "slapd Ok"
 
-#kill
-
-/usr/sbin/slapd -d0 -u ldap -h "ldap:/// ldaps:/// ldapi:///" && echo "Ok"
-
-#/usr/sbin/slapd -d0 -u ldap 

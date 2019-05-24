@@ -121,40 +121,12 @@ objectclass (1.1.2.2.1 NAME 'xuser'
 docker run --rm --name ldap_schema -h ldap_schema --network project -d parveen1992/ldap_schema
 ```
 
-**after that check by php ldap to how looks like**
-
-```
-http://localhost:80/phpldapamin/
-```
-
-```
-docker run --rm --name ldap_php -h ldap_php --net project -p 2080:80 -it parveen1992/ldap_php /bin/bash
-```
-
 **avd. serch in ldap**
 
 ```
 ldapsearch -x -LLL -h localhost -D "cn=user01,ou=usermod,o=europa,dc=edt,dc=org" -w user01 "(cn=pere pou)"
 ```
 
-**my localhost page**
-
-```
-<h1> hello everyone </h1>
-
-welcome to my page
-
-page for everyone
-
-<br>
-
-<a href="http://localhost:2080/phpldapadmin">see phot data binnary</a>
-
-<br>
-
-<a href="http://localhost:3080">login</a>
-
-```
 
 
 
@@ -175,7 +147,6 @@ make user file
 python user_make_ldif.py user_file.txt user.ldif
 
 ```
-
 
 **some try form outside**
 
@@ -234,11 +205,11 @@ docker network crete project
 now start both docker one by one
 
 ```
-docker run --rm --name ldap_p -h ldap_p --net project -it  parveen1992/ldap_provider /bin/bash
+docker run --rm --name ldap_p -h ldap_p --net project -d  parveen1992/ldap_provider
 ```
 
 ```
-docker run --rm --name ldap_c -h ldap_c --net project -it  parveen1992/ldap_consumer /bin/bash
+docker run --rm --name ldap_c -h ldap_c --net project -d  parveen1992/ldap_consumer
 ```
 
 **This is my modify.ldif**
@@ -248,13 +219,6 @@ dn: cn=Pere Pou,ou=usuaris,dc=edt,dc=org
 changetype: modify
 add: description
 description: add by provider
-```
-
-**not posible to modify**
-
-```
-
-ldapmodify -vx -h ldap_c -D "cn=user02,ou=usermod,o=europa,dc=edt,dc=org" -w user01 -f modify.ldif
 ```
 
 **But you can change anythings in master or consumer**
@@ -300,7 +264,7 @@ updateref ldap://ldap_p
 
 
 
-### Subordinate
+### Subordinate and TLS
 
 **Subordinate knowledge information may be provided to delegate a subtree. Subordinate knowledge information is maintained in the directory as a special referral object at the delegate point. The referral object acts as a delegation point, gluing two services together. This mechanism allows for hierarchical directory services to be constructed.**
 
@@ -316,7 +280,7 @@ updateref ldap://ldap_p
 **docker ldapmaster**
 
 ```
-docker run --rm --name ldap_sub_master -h ldap_sub_master --net project -d  parveen1992/ldap_sub_master
+docker run --rm --name ldap_sub_master -h ldap_sub_master --net project -d parveen1992/ldap_sub_master
 ```
 
 **docker ldap_sub**
@@ -369,19 +333,12 @@ dn: cn=group02,ou=group,o=asia,dc=edt,dc=org
 
 ```
 
-```
-[root@ldap_sub_master docker]# ldapsearch -x -LLL -D "cn=Manager,o=asia,dc=edt,dc=org" -b "o=asia,dc=edt,dc=org" -w jupiter dn
-ldap_bind: Invalid credentials (49)
-
-```
-
 
 **all working**
 
 ```
 [root@ldap_sub docker]# /usr/sbin/slapd -d-1 -u ldap -h "ldap:/// ldaps:/// ldapi:///" && echo "Ok"
 .......
-
 
 
 5ce6432d ==>slap_sasl_authorized: can cn=manager,o=asia,dc=edt,dc=org become cn=pere pou,ou=usuaris,o=europa,dc=edt,dc=org?
@@ -407,74 +364,10 @@ ldap_bind: Invalid credentials (49)
 5ce6432d => hdb_dn2idl("o=asia,dc=edt,dc=org")
 5ce6432d => bdb_filter_candidates
 
-
 ..........
 ```
 
-
-
-
-
-
-
-
-
-### Ldap httpd
-
-** add modul mod_ldap **
-
-conf. like this
-
-```
-[root@ldap_httpd docker]# cat ldap_httpd.conf 
-<VirtualHost *:80>
-        ServerAdmin webmaster@localhost
-        ServerName ldap_httpd
-	DocumentRoot /var/www/ldap
-        <Directory /var/www/ldap>
-                Options Indexes FollowSymLinks MultiViews
-                AllowOverride None
-                Order deny,allow
-                Deny from All
-               
-		AuthType Basic
-                AuthBasicProvider ldap
-                AuthName "Test OPenLDAP login"
-                AuthLDAPURL ldap://ldap_schema/ou=usuaris,o=europa,dc=edt,dc=org?uid
-                AuthLDAPBindDN "cn=user01,ou=usermod,o=europa,dc=edt,dc=org"
-                AuthLDAPBindPassword "user01"
-                Require valid-user
-                Satisfy any
-
-        </Directory>
-</VirtualHost>
-
-```
-
-
-**result of some connection try**
-
-```
-172.18.0.1 - - [14/May/2019:09:35:34 +0000] "GET / HTTP/1.1" 401 381 "-" "Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36"
-172.18.0.1 - pere [14/May/2019:09:35:45 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36"
-172.18.0.1 - pere [14/May/2019:09:35:45 +0000] "GET /favicon.ico HTTP/1.1" 404 209 "http://172.18.0.2/" "Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36"
-
-```
-
-**docker start and also connect able to ldap_schema**
-
-```
-docker run --rm --name ldap_httpd -h ldap_httpd --network project -p 3080:80 -it parveen1992/ldap_httpd /bin/bash
-
-```
-
-
-
-
-
-
-
-###  LDAP TLS
+**LDAP TLS basic openssl**
 
 **docker connect to ldap_schema by using tls (ca certificat) or start tls means that can connect normal or if both client and erver have conf for tls then start tls**
 
@@ -482,8 +375,9 @@ docker run --rm --name ldap_httpd -h ldap_httpd --network project -p 3080:80 -it
 **must be use same and no project network beacuse of ip adress**
 
 ```
-docker run --rm --name ldap.edt.org -h ldap.edt.org -it parveen1992/ldaps /bin/bash
+docker run --rm --name ldap.edt.org -h ldap.edt.org --network project -it parveen1992/ldaps /bin/bash
 ```
+
 
 **some try result**
 
@@ -507,15 +401,7 @@ ff02::2	ip6-allrouters
 
 
 
-
-
-
-
-
-
-
 ### LDAP PAM
-
 
 
 **here docker ldap_pam  connect to ldap_schema and valid to user to login mount of home if not exists then make new one by using pam conf.**
@@ -550,15 +436,93 @@ total 0
 
 
 
+### GRAPIH VIEW php
+
+**after that check by php ldap to how looks like**
+
+```
+http://localhost:80/phpldapamin/
+```
+
+```
+docker run --rm --name ldap_php -h ldap_php --net project -p 2080:80 -it parveen1992/ldap_php /bin/bash
+```
+
+**avd. serch in ldap**
+
+```
+ldapsearch -x -LLL -h localhost -D "cn=user01,ou=usermod,o=europa,dc=edt,dc=org" -w user01 "(cn=pere pou)"
+```
+
+**my localhost page**
+
+```
+<h1> hello everyone </h1>
+
+welcome to my page
+
+page for everyone
+
+<br>
+
+<a href="http://localhost:2080/phpldapadmin">see phot data binnary</a>
+
+<br>
+
+<a href="http://localhost:3080">login</a>
+
+```
 
 
 
 
 
 
+### Ldap httpd
 
+** add modul mod_ldap **
 
+conf. like this
 
+```
+[root@ldap_httpd docker]# cat ldap_httpd.conf
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        ServerName ldap_httpd
+        DocumentRoot /var/www/ldap
+        <Directory /var/www/ldap>
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride None
+                Order deny,allow
+                Deny from All
+
+                AuthType Basic
+                AuthBasicProvider ldap
+                AuthName "Test OPenLDAP login"
+                AuthLDAPURL ldap://ldap_schema/ou=usuaris,o=europa,dc=edt,dc=org?uid
+                AuthLDAPBindDN "cn=user01,ou=usermod,o=europa,dc=edt,dc=org"
+                AuthLDAPBindPassword "user01"
+                Require valid-user
+                Satisfy any
+
+        </Directory>
+</VirtualHost>
+
+```
+**result of some connection try**
+```
+172.18.0.1 - - [14/May/2019:09:35:34 +0000] "GET / HTTP/1.1" 401 381 "-" "Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36"
+172.18.0.1 - pere [14/May/2019:09:35:45 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36"
+172.18.0.1 - pere [14/May/2019:09:35:45 +0000] "GET /favicon.ico HTTP/1.1" 404 209 "http://172.18.0.2/" "Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36"
+
+```
+
+**docker start and also connect able to ldap_schema**
+
+```
+docker run --rm --name ldap_httpd -h ldap_httpd --network project -p 3080:80 -it parveen1992/ldap_httpd /bin/bash
+
+```
 
 
 

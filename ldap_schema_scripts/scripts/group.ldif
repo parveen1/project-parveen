@@ -1,0 +1,22 @@
+dn: cn=grouplocal01,ou=group,o=europa,dc=edt,dc=org 
+cn: grouplocal01
+gidNumber: 1
+description:  add new group
+objectclass: posixGroup
+memberUid: local01
+
+dn: cn=grouplocal02,ou=group,o=europa,dc=edt,dc=org 
+cn: grouplocal02
+gidNumber: 2
+description:  add new group
+objectclass: posixGroup
+
+dn: cn=grouplocal03,ou=group,o=europa,dc=edt,dc=org 
+cn: grouplocal03
+gidNumber: 3
+description:  add new group
+objectclass: posixGroup
+memberUid: local03
+memberUid: local04
+memberUid: local05
+

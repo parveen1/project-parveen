@@ -1,0 +1,5 @@
+local01:x:1:1::/home/local01:/bin/bash
+local02:x:2:2::/home/local02:/bin/bash
+local03:x:3:3::/home/local03:/bin/bash
+local04:x:4:3::/home/local04:/bin/bash
+local05:x:5:3::/home/local05:/bin/bash

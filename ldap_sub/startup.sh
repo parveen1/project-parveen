@@ -4,4 +4,5 @@
 # -------------------------------------
 /opt/docker/install.sh && echo "Install Ok"
 /usr/sbin/slapd -d0 -u ldap -h "ldap:/// ldaps:/// ldapi:///" && echo "Ok"
+#/usr/sbin/slapd -u ldap -h "ldap:/// ldaps:/// ldapi:///" && echo "Ok"
 

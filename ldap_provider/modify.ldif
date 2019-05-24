@@ -1,4 +1,4 @@
-dn: cn=Pere Pou,ou=usuaris,dc=edt,dc=org
+dn: cn=Pere Pou,ou=usuaris,o=europa,dc=edt,dc=org
 changetype: modify
 add: description
-description: add by provider
+description: provider add
