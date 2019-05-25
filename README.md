@@ -6,7 +6,7 @@
 
 ### Basic Information
 
-my project is about to explaine some basic and adv. function openldap.i am going to explaine step by step different function of ldap.
+my project is about to explain some basic and adv. function openldap.i am going to explain step by step different function of ldap.
 
 Here i used different docker to make different ldap server and database of ldap.
 
@@ -22,12 +22,9 @@ we start from basic information and knowledge about opeldap......thanks
 * User/System Groups
 * Address book
 * Organization Representation
-* Asset Tracking
 * Telephony Information Store
-* User resource management
 * E-mail address lookups
 * Application Configuration store
-* PBX Configuration store
 
 **ldap workk**
 
