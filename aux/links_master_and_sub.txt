@@ -8,3 +8,9 @@ http://www.zytrax.com/books/ldap/ch7/referrals.html
 
 ##### more information about chaining overlays
 https://linux.die.net/man/5/slapd-ldap
+
+
+
+#### cond video edit
+
+gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 60
