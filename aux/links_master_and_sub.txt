@@ -14,3 +14,63 @@ https://linux.die.net/man/5/slapd-ldap
 #### cond video edit
 
 gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 60
+
+
+
+#### pan doc
+
+
+
+pandoc -s markdown -o project_try.html
+
+pandoc -s markdown -o project_try.pdf
+
+pandoc -s markdown -t slidy -o project_try_slidy.html
+
+
+pandoc -f markdown -t slidy -i -s --self-contained -o mypresentation.html mypresentation_source.md
+
+
+pandoc -s --toc -c pandoc.css -A footer.html MANUAL.txt -o example3.html
+
+
+
+pandoc -s --mathjax -i -t revealjs SLIDES -o example16d.html
+
+
+dnf -y install aspell-en
+
+
+
+```
+% My Presentation Title
+% Duncan Hutty
+% November 27, 2012
+
+# First Slide, Section1
+
+## First Slide, Section1, Subsection1
+
+- first point
+- second point
+
+## First Slide, Section1, Subsection2
+
+- first point in subsection2
+- second point in subsection2
+
+# First Slide, Section2
+
+## First Slide, Section2, Subsection1
+
+- first point
+- second point
+
+-----------------
+
+## Second Slide, Section1
+
+- first point
+- second point
+
+```
