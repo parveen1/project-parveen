@@ -1,20 +1,34 @@
 % PROJECT SERVICE LDAP
 % PARVEEN
+% 2019/06/05
 
-# Basic Information
+# PROJECT INFO
 
-my project is about to explain some basic and adv. function openldap.i am going to explain step by step different function of ldap.
+My project is make one empresa in europa but also have user in asia.
+
+Empresa with different user and and user access control.
 
 Here i used different docker to make different ldap server and database of ldap.
 
-Also we are going to use as clients how is work connection etc.
+Also we are going to use as clients interface and how is work connection etc.
 
-we start from basic information and knowledge about opeldap......thanks
-
-**LDAP stands for Lightweight Directory Access Protocol**
+we start from basic information and knowledge about opeldap
 
 
-# when to use ldap
+# BASIC INFORMATION
+
+* LDAP
+* LDAP WORK
+* SLAPD.CONF
+* LDIF
+* SCHEMA
+
+# LDAP
+
+LDAP stands for Lightweight Directory Access Protocol
+
+
+# Where we use ldap
 
 * Machine Authentication
 * User Authentication
@@ -27,22 +41,35 @@ we start from basic information and knowledge about opeldap......thanks
 
 
 
-# ldap work
+# LDAP WORK
 
-LDAP utilizes a client-server model. One or more LDAP servers contain the data making up the directory information tree (DIT)
+LDAP utilizes a client-server model. 
 
-**slapd conf**
+One or more LDAP servers contain the data making up the directory information tree (DIT)
 
-slapd(8) is an LDAP directory server that runs on many different platforms. You can use it to provide a directory service of your very own. Your directory can contain pretty much anything you want to put in it. You can connect it to the global LDAP directory service, or run a service all by yourself.
-
-
+![serverclientFigure](aux/serverClient.png)
 
 
-# Data for ldif
+# SLAPD CONF
+
+This directory can contain pretty much anything you want to put in it. 
+
+You can connect it to the global LDAP directory service, or run a service all by yourself.
+
+
+
+# LDIF
+
+The LDAP Data Interchange Format (LDIF) is a standard plain text data interchange format for representing LDAP (Lightweight Directory Access Protocol) directory content and update requests.
+
+
+
+
+# STRUCTURE OF MY LDIF
 
 **Here i show how is my structure of ldif file all data hbd beacuse of more function we can use**
 
-* start with Distinguished Name **dc=edt,dc=org**
+* start with Distinguished Name(suffix) **dc=edt,dc=org**
 
 * make organization in this data **o=europa,dc=edt,dc=org**
 
