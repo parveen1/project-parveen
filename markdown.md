@@ -6,7 +6,7 @@
 
 My project is make one empresa in europa but also have user in asia.
 
-Empresa with different user and and user access control.
+Empresa with different user and user access control.
 
 Here i used different docker to make different ldap server and database of ldap.
 
@@ -22,6 +22,9 @@ we start from basic information and knowledge about opeldap
 * SLAPD.CONF
 * LDIF
 * SCHEMA
+* BDB AND HDB
+* REFERRAL
+* OVERLAY CHAIN
 
 # LDAP
 
@@ -62,8 +65,21 @@ You can connect it to the global LDAP directory service, or run a service all by
 
 The LDAP Data Interchange Format (LDIF) is a standard plain text data interchange format for representing LDAP (Lightweight Directory Access Protocol) directory content and update requests.
 
+# BDB AND HDB  
 
+The bdb backend to slapd is the recommended primary backend for a normal slapd database. It uses the Oracle Berkeley DB (BDB) package to store data. It makes extensive use of indexing and caching to speed data access.
 
+hdb is a variant of the bdb backend that uses a hierarchical database layout which supports subtree renames. It is otherwise identical to the bdb behavior, and all the same configuration options apply.
+
+# REFERRAL
+
+An alias contains the DN of another object, where as a referral contains one or more URLs of objects.
+
+# OVERLAY CHAIN
+
+What is chaining? 
+
+It indicates the capability of a DSA(directory system agent) to follow referrals on behalf of the client, so that distributed systems are viewed as a single virtual DSA by clients that are otherwise unable to "chase" (i.e. follow) referrals by themselves.
 
 # STRUCTURE OF MY LDIF
 
@@ -108,12 +124,11 @@ The LDAP Data Interchange Format (LDIF) is a standard plain text data interchang
 
 # Schema Specification
 
-**To save data in a readable format in ldap we called schema(this is reason so we can )**
+**To save data in a readable format we need some rules.These rules called schema in ldap**
 
-different schema make esay to read and write also make fuctionable data in
- ldif very important to know different type of like photo,dn,cn,binary file etc.
+Different schema make esay to read and write also make fuctionable data inldif very important to know different type of like photo,dn,cn,binary file etc.
 
-here one simple exemple make by mi
+# Here one simple exemple make by mi
 
 ```
 # schema add photo and pdf:
@@ -136,24 +151,17 @@ objectclass (1.1.2.2.1 NAME 'xuser'
   AUXILIARY
   MUST ( xfoto $ xpdf )
  )
-
 ```
-
 **docker ldap_schema add photo and pdf**
-
-
-
-
-
-
 
 
 # Scripts
 
-**here i make some useful scripts /etc/passwd to ldif file**
+**Here i make one useful scripts .This scripts change format /etc/passwd to ldif file**
 
+we can use use this scripts to add all of localuser and group in ldap server.
 
-**my scripts**
+# my scripts
 
 ```
 #! /bin/bash
@@ -177,7 +185,10 @@ OpenLDAP now supports a wide variety of replication topologies, these terms have
 
 but today ldap user ldap provider and consumer server which can we use both as main server and for backup.
 
+# Understand by figure
+
 ![providerAndConsumerFigure](aux/provider_consumer.png)
+
 
 # This is my modifyldif
 
@@ -214,58 +225,54 @@ updateref ldap://ldap_p
 ```
 
 
-# Subordinate and TLS
+# Subordinate 
 
 **Subordinate knowledge information may be provided to delegate a subtree. Subordinate knowledge information is maintained in the directory as a special referral object at the delegate point. The referral object acts as a delegation point, gluing two services together. This mechanism allows for hierarchical directory services to be constructed.**
 
 
-**NOTE:- if one data str. conf to where we can find iformation about this DSA (another DIT) this is called referral**
+**NOTE:- This posible if one data str. tell you where we can find information about this DSA (another DIT) this is called referral**
 
 
 **But we use this referral to server collect all information and send to client**  
 
+# Understand by figure
 
 ![ldapMasterFigure](aux/sub_master.png)
 
 
 
-# LDAP TLS basic openssl
+# LDAP TLS basic 
 
-**docker connect to ldapschema by using tls (ca certificat) or start tls means that can connect normal or if both client and server have conf for tls then start tls**
+**Transport Layer Security**
 
-**user old cert to my new data working great only change extension**
-**must be use same and no project network beacuse of ip adress or add subject alter name**
+**Client connect to ldap_sub_master and ldap_sub by using tls (ca certificat) or start tls.**
+
+**In above connection between ldap_sub_master and ldap_sub we tls**
+
 
 
 # LDAP PAM
 
-
-**here docker ldap_pam  connect to ldap_schema and valid to user to login mount of home if not exists then make new one by using pam conf.**
-
-**pam docker as host**
+**here docker ldap_pam  connect as client to ldap_schema(server) and valid to user to login mount of home if not exists then make new home directroy by using pam configuration**
 
 
-**check point**
+# GRAHICAL VIEW
 
-
-
-
-
-# GRAHICAL VIEW PHP AND HTTPS
-
+* php
+* httpd
 
 # PHP
 
-**check by php ldap to look about photo and  pdf of user**
+**Here we start docker php client and use localhost httpd server to see photo and pdf file of user**
 
 
 
 
 # Ldap httpd
 
+**Here we use client docker httpd connect to docker ldap_schema and check user authication** 
 
-
-# THANKYOU ALL OF YOU
+# THANKYOU 
 
 ![](aux/end_photo1.png)
 

@@ -6,15 +6,22 @@
 
 ### Basic Information
 
-my project is about to explain some basic and adv. function openldap.i am going to explain step by step different function of ldap.
+My project is make one empresa in europa but also have user in asia.
 
-Here i used different docker to make different ldap server and database of ldap.
+Empresa with different user,group and there access control.
 
-Also we are going to use as clients how is work connection etc.
+Also we have different branch and backup system of all data.
 
-we start from basic information and knowledge about opeldap......thanks
+Here i am going to explain step by step every setting and concept.
+
+In this project i used different docker to make different ldap server and database of ldap.
+
+Also we are going to connect as clients . how is work connection etc.
+
+we start from basic information and knowledge about opeldap
 
 **LDAP stands for Lightweight Directory Access Protocol**
+
 **when to use ldap**
 
 * Machine Authentication

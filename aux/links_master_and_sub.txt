@@ -25,7 +25,7 @@ pandoc -s markdown -o project_try.html
 
 pandoc -s markdown -o project_try.pdf
 
-pandoc -s markdown -t slidy -o project_try_slidy.html
+pandoc -s markdown.md -t slidy -o project_slidy.html
 
 
 pandoc -f markdown -t slidy -i -s --self-contained -o mypresentation.html mypresentation_source.md

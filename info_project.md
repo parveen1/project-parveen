@@ -34,6 +34,6 @@ make docker of pam,httpd and php
 start make prestacion ,markdown ,html and poster video......
 
 
-### working in html slidy and pandoc
-
-video need add vioce
+### work done in html slidy and pandoc
+ 
+ALL complet
