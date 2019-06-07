@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="PARVEEN" />
+  <title>PROJECT SERVICE LDAP</title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<div id="header">
+<h1 class="title">PROJECT SERVICE LDAP</h1>
+<h2 class="author">PARVEEN</h2>
+<h3 class="date">2019/06/05</h3>
+</div>
+<h1 id="project-info">PROJECT INFO</h1>
+<p>My project is make one empresa in europa but also have user in asia.</p>
+<p>Empresa with different user and user access control.</p>
+<p>Here i used different docker to make different ldap server and database of ldap.</p>
+<p>Also we are going to use as clients interface and how is work connection etc.</p>
+<p>we start from basic information and knowledge about opeldap</p>
+<h1 id="basic-information">BASIC INFORMATION</h1>
+<ul>
+<li>LDAP</li>
+<li>LDAP WORK</li>
+<li>SLAPD.CONF</li>
+<li>LDIF</li>
+<li>SCHEMA</li>
+<li>BDB AND HDB</li>
+<li>REFERRAL</li>
+<li>OVERLAY CHAIN</li>
+</ul>
+<h1 id="ldap">LDAP</h1>
+<p>LDAP stands for Lightweight Directory Access Protocol</p>
+<h1 id="where-we-use-ldap">Where we use ldap</h1>
+<ul>
+<li>Machine Authentication</li>
+<li>User Authentication</li>
+<li>User/System Groups</li>
+<li>Address book</li>
+<li>Organization Representation</li>
+<li>Telephony Information Store</li>
+<li>E-mail address look ups</li>
+<li>Application Configuration store</li>
+</ul>
+<h1 id="ldap-work">LDAP WORK</h1>
+<p>LDAP utilizes a client-server model.</p>
+<p>One or more LDAP servers contain the data making up the directory information tree (DIT)</p>
+<div class="figure">
+<img src="aux/serverClient.png" alt="serverclientFigure" />
+<p class="caption">serverclientFigure</p>
+</div>
+<h1 id="slapd-conf">SLAPD CONF</h1>
+<p>This directory can contain pretty much anything you want to put in it.</p>
+<p>You can connect it to the global LDAP directory service, or run a service all by yourself.</p>
+<h1 id="ldif">LDIF</h1>
+<p>The LDAP Data Interchange Format (LDIF) is a standard plain text data interchange format for representing LDAP (Lightweight Directory Access Protocol) directory content and update requests.</p>
+<h1 id="bdb-and-hdb">BDB AND HDB</h1>
+<p>The bdb backend to slapd is the recommended primary backend for a normal slapd database. It uses the Oracle Berkeley DB (BDB) package to store data. It makes extensive use of indexing and caching to speed data access.</p>
+<p>hdb is a variant of the bdb backend that uses a hierarchical database layout which supports subtree renames. It is otherwise identical to the bdb behavior, and all the same configuration options apply.</p>
+<h1 id="referral">REFERRAL</h1>
+<p>An alias contains the DN of another object, where as a referral contains one or more URLs of objects.</p>
+<h1 id="overlay-chain">OVERLAY CHAIN</h1>
+<p>What is chaining?</p>
+<p>It indicates the capability of a DSA(directory system agent) to follow referrals on behalf of the client, so that distributed systems are viewed as a single virtual DSA by clients that are otherwise unable to &quot;chase&quot; (i.e. follow) referrals by themselves.</p>
+<h1 id="structure-of-my-ldif">STRUCTURE OF MY LDIF</h1>
+<p><strong>Here i show how is my structure of ldif file all data hbd because of more function we can use</strong></p>
+<ul>
+<li><p>start with Distinguished Name(suffix) <strong>dc=edt,dc=org</strong></p></li>
+<li><p>make organization in this data <strong>o=europa,dc=edt,dc=org</strong></p></li>
+<li><p>now make organization unit in my case <strong>ou=usuaris,o=europa,dc=edt,dc=org</strong></p></li>
+<li><p>add new organization unit in my case <strong>ou=group,o=europa,dc=edt,dc=org</strong></p></li>
+<li><p>add new organization unit in my case <strong>ou=usermod,o=europa,dc=edt,dc=org</strong></p></li>
+<li><p>add new organization unit in my case <strong>ou=maquines,o=europa,dc=edt,dc=org</strong></p></li>
+<li><p>now make new organization for another subordinate in my case <strong>o=asia,dc=edt,dc=org</strong></p></li>
+</ul>
+<h1 id="sub-tree-server">sub tree server</h1>
+<p><strong>after this all data will be make another place or docker</strong></p>
+<ul>
+<li><p>now make organization unit in my case <strong>ou=usuaris,o=asia,dc=edt,dc=org</strong></p></li>
+<li><p>add new organization unit in my case <strong>ou=group,o=asia,dc=edt,dc=org</strong></p></li>
+<li><p>add new organization unit in my case <strong>ou=usermod,o=asia,dc=edt,dc=org</strong></p></li>
+<li><p>add new organization unit in my case <strong>ou=maquines,o=asia,dc=edt,dc=org</strong></p></li>
+</ul>
+<h1 id="figure">FIGURE</h1>
+<div class="figure">
+<img src="aux/data_ldap.png" alt="dataStructureFigure" />
+<p class="caption">dataStructureFigure</p>
+</div>
+<h1 id="schema-specification">Schema Specification</h1>
+<p><strong>To save data in a readable format we need some rules.These rules called schema in ldap</strong></p>
+<p>Different schema make easy to read and write also make functional data in ldif very important to know different type of like photo,dn,cn,binary file etc.</p>
+<h1 id="here-one-simple-example-make-by-mi">Here one simple example make by mi</h1>
+<pre><code># schema add photo and pdf:
+#          foto, pdf
+# parveen
+# Objecte  Auxiliary  (derivat de TOP)
+#
+attributetype (1.1.2.1.1 NAME &#39;xfoto&#39;
+  DESC &#39;foto del user jpeg&#39;
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.28)
+
+attributetype (1.1.2.1.2 NAME &#39;xpdf&#39;
+  DESC &#39;pdf file&#39;
+  SYNTAX  1.3.6.1.4.1.1466.115.121.1.5
+  SINGLE-VALUE)
+
+objectclass (1.1.2.2.1 NAME &#39;xuser&#39;
+  DESC &#39;user add foto and pdf&#39;
+  SUP TOP
+  AUXILIARY
+  MUST ( xfoto $ xpdf )
+ )</code></pre>
+<p><strong>docker ldap_schema add photo and pdf</strong></p>
+<h1 id="scripts">Scripts</h1>
+<p><strong>Here i make one useful scripts .This scripts change format /etc/passwd to ldif file</strong></p>
+<p>we can use use this scripts to add all of local user and group in ldap server.</p>
+<h1 id="my-scripts">my scripts</h1>
+<pre><code>#! /bin/bash
+# description add automatic all user
+rm -rf group.ldif
+rm -rf user.ldif
+python group_make_ldif.py groupfile.txt group.ldif
+python user_make_ldif.py user_file.txt user.ldif</code></pre>
+<h1 id="replication">Replication</h1>
+<p><strong>ldap server backup save called replication</strong></p>
+<p>OpenLDAP now supports a wide variety of replication topologies, these terms have been deprecated in favor of provider and consumer: A provider replicates directory updates to consumers; consumers receive replication updates from providers. Unlike the rigidly defined master/slave relationships, provider/consumer roles are quite fluid: replication updates received in a consumer can be further propagated by that consumer to other servers, so a consumer can also act simultaneously as a provider. Also, a consumer need not be an actual LDAP server; it may be just an LDAP client.</p>
+<p>but today ldap user ldap provider and consumer server which can we use both as main server and for backup.</p>
+<h1 id="understand-by-figure">Understand by figure</h1>
+<div class="figure">
+<img src="aux/provider_consumer.png" alt="providerAndConsumerFigure" />
+<p class="caption">providerAndConsumerFigure</p>
+</div>
+<h1 id="this-is-my-modifyldif">This is my modifyldif</h1>
+<pre><code>dn: cn=Pere Pou,ou=usuaris,dc=edt,dc=org
+changetype: modify
+add: description
+description: add by provider</code></pre>
+<p><strong>But you can change anythings in master or consumer</strong></p>
+<h1 id="provider">provider</h1>
+<ul>
+<li>overlay syncprov</li>
+<li>syncprov-checkpoint 50 10</li>
+<li>syncprov-sessionlog 100</li>
+</ul>
+<h1 id="consumer">consumer</h1>
+<p><strong>addition configure. in consumer</strong></p>
+<pre><code>syncrepl rid=001
+  provider=ldap://ldap_p
+  type=refreshOnly
+  interval=00:00:00:10
+  searchbase=&quot;dc=edt,dc=org&quot;
+  binddn=&quot;cn=Manager,dc=edt,dc=org&quot;
+  credentials=jupiter
+updateref ldap://ldap_p</code></pre>
+<h1 id="subordinate">Subordinate</h1>
+<p><strong>Subordinate knowledge information may be provided to delegate a sub tree. Subordinate knowledge information is maintained in the directory as a special referral object at the delegate point. The referral object acts as a delegation point, gluing two services together. This mechanism allows for hierarchical directory services to be constructed.</strong></p>
+<p><strong>NOTE:- This possible if one data str. tell you where we can find information about this DSA (another DIT) this is called referral</strong></p>
+<p><strong>But we use this referral to server collect all information and send to client</strong></p>
+<h1 id="understand-by-figure-1">Understand by figure</h1>
+<div class="figure">
+<img src="aux/sub_master.png" alt="ldapMasterFigure" />
+<p class="caption">ldapMasterFigure</p>
+</div>
+<h1 id="ldap-tls-basic">LDAP TLS basic</h1>
+<p><strong>Transport Layer Security</strong></p>
+<p><strong>Client connect to ldap_sub_master and ldap_sub by using tls (ca certificate) or start tls.</strong></p>
+<p><strong>In above connection between ldap_sub_master and ldap_sub we tls</strong></p>
+<h1 id="ldap-pam">LDAP PAM</h1>
+<p><strong>here docker ldap_pam connect as client to ldap_schema(server) and valid to user to login mount of home if not exists then make new home directory by using pam configuration</strong></p>
+<h1 id="grahical-view">GRAHICAL VIEW</h1>
+<ul>
+<li>php</li>
+<li>httpd</li>
+</ul>
+<h1 id="php">PHP</h1>
+<p><strong>Here we start docker php client and use localhost httpd server to see photo and pdf file of user</strong></p>
+<h1 id="ldap-httpd">Ldap httpd</h1>
+<p><strong>Here we use client docker httpd connect to docker ldap_schema and check user authentication</strong></p>
+<h1 id="thank-you">THANK YOU</h1>
+<div class="figure">
+<img src="aux/end_photo1.png" />
+
+</div>
+</body>
+</html>

@@ -33,9 +33,9 @@ we start from basic information and knowledge about opeldap
 * E-mail address lookups
 * Application Configuration store
 
-**ldap workk**
+**ldap work**
 
-LDAP utilizes a client-server model. One or more LDAP servers contain the data making up the directory information tree (DIT)
+LADY utilizes a client-server model. One or more LDAP servers contain the data making up the directory information tree (DIT)
 
 **slapd conf**
 
@@ -90,10 +90,10 @@ slapd(8) is an LDAP directory server that runs on many different platforms. You 
 
 **To save data in a readable format in ldap we called schema(this is reason so we can )**
 
-different schema make esay to read and write also make fuctionable data in
+different schema make easy to read and write also make functional data in
  ldif very important to know different type of like photo,dn,cn,binary file etc.
 
-here one simple exemple make by mi
+here one simple example make by mi
 
 ```
 # schema add photo and pdf:
@@ -125,7 +125,7 @@ objectclass (1.1.2.2.1 NAME 'xuser'
 docker run --rm --name ldap_schema -h ldap_schema --network project -d parveen1992/ldap_schema
 ```
 
-**avd. serch in ldap**
+**advance. search in ldap**
 
 ```
 ldapsearch -x -LLL -h localhost -D "cn=user01,ou=usermod,o=europa,dc=edt,dc=org" -w user01 "(cn=pere pou)"
@@ -140,7 +140,7 @@ ldapsearch -x -LLL -h localhost -D "cn=user01,ou=usermod,o=europa,dc=edt,dc=org"
 
 **here i make some useful scripts /etc/passwd to ldif file**
 
-make groop file
+make group file
 
 ```
 python group_make_ldif.py groupfile.txt group.ldif
@@ -168,7 +168,7 @@ my scripts
 
 ```
 #! /bin/bash
-# description add authomatic all user
+# description add automatic all user
 rm -rf group.ldif
 rm -rf user.ldif
 
@@ -176,7 +176,7 @@ python group_make_ldif.py groupfile.txt group.ldif
 
 python user_make_ldif.py user_file.txt user.ldif
 
-# insisde from network or docker(from out must use ip address)
+# inside from network or docker(from out must use IP address)
 ldapadd -h ldap_schema -D "cn=Manager,dc=edt,dc=org" -w jupiter -f group.ldif
 ldapadd -h ldap_schema -D "cn=Manager,dc=edt,dc=org" -w jupiter -f user.ldif
 
@@ -203,7 +203,7 @@ here is all configutaion of this server all if you like also use my docker
 make new network
 
 ```
-docker network crete project
+docker network create project
 ```
 
 now start both docker one by one
@@ -237,13 +237,13 @@ ldapmodify -vx -h ldap_c -D "cn=user01,ou=usermod,o=europa,dc=edt,dc=org" -w use
 
 ##### provider
 
-**overlay syncprov**
+**overlay sync prov**
 
-Add in plugin for save all entres later update for consumer
+Add in plugin for save all entries later update for consumer
 
 **syncprov-checkpoint 50 10**
 
-this means update ever 50 operction or 10 mintus
+this means update ever 50 operation or 10 minutes
 
 **syncprov-sessionlog 100**
 
@@ -251,7 +251,7 @@ user log in after 100
 
 ##### consumer
 
-**addtion conf. in consumer**
+**addition configure. in consumer**
 
 ```
 syncrepl rid=001
@@ -373,10 +373,10 @@ dn: cn=group02,ou=group,o=asia,dc=edt,dc=org
 
 **LDAP TLS basic openssl**
 
-**docker connect to ldap_schema by using tls (ca certificat) or start tls means that can connect normal or if both client and server have conf for tls then start tls**
+**docker connect to ldap_schema by using tls (ca certificat) or start tls means that can connect normal or if both client and server have configure for tls then start tls**
 
 **user old cert to my new data working great only change extension**
-**must be use same and no project network beacuse of ip adress or add subject alter name**
+**must be use same and no project network because of IP address or add subject alter name**
 
 ```
 docker run --rm --name ldap.edt.org -h ldap.edt.org --network project -it parveen1992/ldaps /bin/bash
@@ -408,7 +408,7 @@ ff02::2	ip6-allrouters
 ### LDAP PAM
 
 
-**here docker ldap_pam  connect to ldap_schema and valid to user to login mount of home if not exists then make new one by using pam conf.**
+**here docker ldap_pam  connect to ldap_schema and valid to user to login mount of home if not exists then make new one by using pam configure.**
 
 **pam docker as host**
 
@@ -440,7 +440,7 @@ total 0
 
 
 
-### GRAHICAL VIEW PHP AND HTTPS
+### GRAPHICAL VIEW PHP AND HTTPD
 
 **my localhost page in httpd**
 
@@ -473,9 +473,9 @@ docker run --rm --name ldap_php -h ldap_php --net project -p 2080:80 -it parveen
 
 #### Ldap httpd
 
-** add modul mod_ldap **
+** add model mod_ldap **
 
-conf. like this
+configure. like this
 
 ```
 [root@ldap_httpd docker]# cat ldap_httpd.conf

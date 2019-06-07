@@ -83,7 +83,7 @@ It indicates the capability of a DSA(directory system agent) to follow referrals
 
 # STRUCTURE OF MY LDIF
 
-**Here i show how is my structure of ldif file all data hbd beacuse of more function we can use**
+**Here i show how is my structure of ldif file all data hbd because of more function we can use**
 
 * start with Distinguished Name(suffix) **dc=edt,dc=org**
 
@@ -126,9 +126,9 @@ It indicates the capability of a DSA(directory system agent) to follow referrals
 
 **To save data in a readable format we need some rules.These rules called schema in ldap**
 
-Different schema make esay to read and write also make fuctionable data inldif very important to know different type of like photo,dn,cn,binary file etc.
+Different schema make easy to read and write also make functional data in ldif very important to know different type of like photo,dn,cn,binary file etc.
 
-# Here one simple exemple make by mi
+# Here one simple example make by mi
 
 ```
 # schema add photo and pdf:
@@ -159,13 +159,13 @@ objectclass (1.1.2.2.1 NAME 'xuser'
 
 **Here i make one useful scripts .This scripts change format /etc/passwd to ldif file**
 
-we can use use this scripts to add all of localuser and group in ldap server.
+we can use use this scripts to add all of local user and group in ldap server.
 
 # my scripts
 
 ```
 #! /bin/bash
-# description add authomatic all user
+# description add automatic all user
 rm -rf group.ldif
 rm -rf user.ldif
 python group_make_ldif.py groupfile.txt group.ldif
@@ -211,7 +211,7 @@ description: add by provider
 
 # consumer
 
-**addtion conf. in consumer**
+**addition configure. in consumer**
 
 ```
 syncrepl rid=001
@@ -227,10 +227,10 @@ updateref ldap://ldap_p
 
 # Subordinate 
 
-**Subordinate knowledge information may be provided to delegate a subtree. Subordinate knowledge information is maintained in the directory as a special referral object at the delegate point. The referral object acts as a delegation point, gluing two services together. This mechanism allows for hierarchical directory services to be constructed.**
+**Subordinate knowledge information may be provided to delegate a sub tree. Subordinate knowledge information is maintained in the directory as a special referral object at the delegate point. The referral object acts as a delegation point, gluing two services together. This mechanism allows for hierarchical directory services to be constructed.**
 
 
-**NOTE:- This posible if one data str. tell you where we can find information about this DSA (another DIT) this is called referral**
+**NOTE:- This possible if one data str. tell you where we can find information about this DSA (another DIT) this is called referral**
 
 
 **But we use this referral to server collect all information and send to client**  
@@ -245,7 +245,7 @@ updateref ldap://ldap_p
 
 **Transport Layer Security**
 
-**Client connect to ldap_sub_master and ldap_sub by using tls (ca certificat) or start tls.**
+**Client connect to ldap_sub_master and ldap_sub by using tls (ca certificate) or start tls.**
 
 **In above connection between ldap_sub_master and ldap_sub we tls**
 
@@ -253,7 +253,7 @@ updateref ldap://ldap_p
 
 # LDAP PAM
 
-**here docker ldap_pam  connect as client to ldap_schema(server) and valid to user to login mount of home if not exists then make new home directroy by using pam configuration**
+**here docker ldap_pam  connect as client to ldap_schema(server) and valid to user to login mount of home if not exists then make new home directory by using pam configuration**
 
 
 # GRAHICAL VIEW
@@ -270,9 +270,9 @@ updateref ldap://ldap_p
 
 # Ldap httpd
 
-**Here we use client docker httpd connect to docker ldap_schema and check user authication** 
+**Here we use client docker httpd connect to docker ldap_schema and check user authentication** 
 
-# THANKYOU 
+# THANK YOU 
 
 ![](aux/end_photo1.png)
 
